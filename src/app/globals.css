@@ -4,6 +4,9 @@
   --color-overlay: #ffffff11;
   --color-editor-bg-active: #222;
   --color-editor-bg-inactive: #333;
+  --color-text-primary: #fffe;
+  --color-text-secondary: #fff9;
+  --color-text-disabled: #fff5;
 }
 
 :root {
@@ -25,6 +28,11 @@ body {
   overflow-x: hidden;
   padding: 0;
   margin: 0;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
 body {
