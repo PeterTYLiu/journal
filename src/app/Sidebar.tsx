@@ -12,10 +12,11 @@ export default async function Sidebar() {
   const todayDateString = new Date().toDateString();
   return (
     <div className="p-4" style={{ width: "350px", overflowY: "auto" }}>
-      <div className="flex">
+      <div className="flex justify-between mb-4">
         <form action={createEntry}>
           <button>New</button>
         </form>
+        <Link href="/">Home</Link>
       </div>
       <div style={{ display: "flex", gap: "15px", flexDirection: "column" }}>
         {Object.entries(groupedEntries).map(([dateString, entriesInGroup]) => {

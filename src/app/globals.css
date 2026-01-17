@@ -2,8 +2,7 @@
 
 @theme {
   --color-overlay: #ffffff11;
-  --color-editor-bg-active: #222;
-  --color-editor-bg-inactive: #333;
+  --color-editor: #222;
   --color-text-primary: #fffe;
   --color-text-secondary: #fff9;
   --color-text-disabled: #fff5;

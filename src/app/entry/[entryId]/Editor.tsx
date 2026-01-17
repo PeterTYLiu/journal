@@ -1,0 +1,100 @@
+"use client";
+
+import { Entry } from "@/generated/prisma/client";
+import { updateEntryText } from "./updateEntryText";
+
+import { deleteEntry } from "@/app/deleteEntry";
+import {
+  type ChangeEventHandler,
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+  ViewTransition,
+} from "react";
+import { updateEntryDate, type UpdateEntryDateState } from "./updateEntryDate";
+
+export default function Editor({ entry }: { entry: Entry }) {
+  const [content, setContent] = useState(entry.text);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const timeoutIdRef = useRef<number>(-1);
+  const dateFormRef = useRef<HTMLFormElement>(null);
+  const [updateDateState, updateDateAction, isUpdatingDate] = useActionState<
+    UpdateEntryDateState,
+    FormData
+  >(updateEntryDate, null);
+
+  const handleTextInput: ChangeEventHandler<HTMLTextAreaElement> = ({
+    target: { value: newContent },
+  }) => {
+    clearTimeout(timeoutIdRef.current);
+    setContent(newContent);
+    const thisLinkText = document.getElementById(entry.id);
+    if (thisLinkText) {
+      if (newContent) {
+        thisLinkText.innerText = newContent;
+      } else {
+        thisLinkText.innerHTML = "<i style='opacity: 0.4;'>Empty</i>";
+      }
+    }
+    timeoutIdRef.current = window.setTimeout(() => {
+      updateEntryText(newContent, entry.id);
+    }, 900);
+  };
+
+  useEffect(() => {
+    textAreaRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (updateDateState !== null && !isUpdatingDate) {
+      alert(
+        updateDateState === "failed" ? "Failed to update date" : "Updated date!"
+      );
+    }
+  }, [isUpdatingDate, updateDateState]);
+
+  return (
+    <ViewTransition name="editor">
+      <div className="flex flex-col h-dvh bg-editor">
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <form action={updateDateAction} ref={dateFormRef}>
+            <input type="hidden" value={entry.id} name="entry-id" />
+            <input
+              onChange={(e) => dateFormRef.current?.requestSubmit()}
+              type="date"
+              name="date"
+              defaultValue={entry.date.toLocaleString("en-CA", {
+                timeZone: "America/New_York",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })}
+            />
+          </form>
+          <form action={deleteEntry}>
+            <input type="hidden" name="entry-id" value={entry.id} />
+            <button>Delete</button>
+          </form>
+        </div>
+        <textarea
+          name="editor"
+          ref={textAreaRef}
+          className="font-mono p-6"
+          style={{
+            width: "100%",
+            resize: "none",
+            flexGrow: "1",
+            border: "none",
+            outline: "none",
+          }}
+          value={content}
+          autoCorrect="off"
+          autoCapitalize="off"
+          placeholder="Write down what you did today"
+          onChange={handleTextInput}
+        />
+      </div>
+    </ViewTransition>
+  );
+}
