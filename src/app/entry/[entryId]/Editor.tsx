@@ -47,21 +47,25 @@ export default function Editor({ entry }: { entry: Entry }) {
   }, []);
 
   useEffect(() => {
-    if (updateDateState !== null && !isUpdatingDate) {
-      alert(
-        updateDateState === "failed" ? "Failed to update date" : "Updated date!"
-      );
+    if (
+      updateDateState !== null &&
+      !isUpdatingDate &&
+      updateDateState === "failed"
+    ) {
+      alert("Failed to update date");
     }
   }, [isUpdatingDate, updateDateState]);
 
   return (
     <ViewTransition name="editor">
-      <div className="flex flex-col h-dvh bg-editor">
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <title>{entry.date.toDateString()}</title>
+      <div className="flex flex-col h-dvh bg-editor gap-2">
+        <div className="flex justify-between p-6 pb-0">
           <form action={updateDateAction} ref={dateFormRef}>
             <input type="hidden" value={entry.id} name="entry-id" />
             <input
-              onChange={(e) => dateFormRef.current?.requestSubmit()}
+              className="text-2xl w-40"
+              onChange={() => dateFormRef.current?.requestSubmit()}
               type="date"
               name="date"
               defaultValue={entry.date.toLocaleString("en-CA", {

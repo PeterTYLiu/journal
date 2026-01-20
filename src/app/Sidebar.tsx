@@ -11,14 +11,22 @@ export default async function Sidebar() {
   );
   const todayDateString = new Date().toDateString();
   return (
-    <div className="p-4" style={{ width: "350px", overflowY: "auto" }}>
-      <div className="flex justify-between mb-4">
+    <div className="w-80 flex flex-col">
+      <div className="flex justify-between p-4">
         <form action={createEntry}>
           <button>New</button>
         </form>
         <Link href="/">Home</Link>
       </div>
-      <div style={{ display: "flex", gap: "15px", flexDirection: "column" }}>
+      <div
+        className="p-4"
+        style={{
+          display: "flex",
+          gap: "15px",
+          flexDirection: "column",
+          overflowY: "auto",
+        }}
+      >
         {Object.entries(groupedEntries).map(([dateString, entriesInGroup]) => {
           if (!entriesInGroup) return null; // This makes TS happy
           const isToday = dateString === todayDateString;
