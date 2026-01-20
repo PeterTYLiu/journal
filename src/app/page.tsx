@@ -3,17 +3,11 @@ import { createEntry } from "./createEntry";
 
 export default function Home() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <div className="flex flex-col items-center">
       <h1>Hello friend</h1>
-      <form action={createEntry} style={{ width: "50%" }}>
+      <form action={createEntry} className="w-[50%]">
         <ViewTransition name="editor">
-          <button className="p-8 bg-editor font-mono" style={{ width: "100%" }}>
+          <button className="p-8 bg-editor font-mono w-full">
             What did I do today..?
           </button>
         </ViewTransition>

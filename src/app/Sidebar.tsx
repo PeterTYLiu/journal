@@ -18,15 +18,7 @@ export default async function Sidebar() {
         </form>
         <Link href="/">Home</Link>
       </div>
-      <div
-        className="p-4"
-        style={{
-          display: "flex",
-          gap: "15px",
-          flexDirection: "column",
-          overflowY: "auto",
-        }}
-      >
+      <div className="p-4 flex gap-3.5 flex-col overflow-y-auto">
         {Object.entries(groupedEntries).map(([dateString, entriesInGroup]) => {
           if (!entriesInGroup) return null; // This makes TS happy
           const isToday = dateString === todayDateString;
@@ -44,7 +36,7 @@ export default async function Sidebar() {
                     className="hover:bg-overlay p-2 block"
                   >
                     <p id={entry.id} className="line-clamp-2">
-                      {entry.text || <i style={{ opacity: 0.4 }}>Empty</i>}
+                      {entry.text || <i className="opacity-40">Empty</i>}
                     </p>
                   </Link>
                 );

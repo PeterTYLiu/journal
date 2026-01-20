@@ -27,7 +27,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Sidebar />
-        <div style={{ flexGrow: "1" }}>{children}</div>
+        <div className="grow">{children}</div>
       </body>
     </html>
   );

@@ -34,7 +34,7 @@ export default function Editor({ entry }: { entry: Entry }) {
       if (newContent) {
         thisLinkText.innerText = newContent;
       } else {
-        thisLinkText.innerHTML = "<i style='opacity: 0.4;'>Empty</i>";
+        thisLinkText.innerHTML = "<i class='opacity-40'>Empty</i>";
       }
     }
     timeoutIdRef.current = window.setTimeout(() => {
@@ -84,14 +84,7 @@ export default function Editor({ entry }: { entry: Entry }) {
         <textarea
           name="editor"
           ref={textAreaRef}
-          className="font-mono p-6"
-          style={{
-            width: "100%",
-            resize: "none",
-            flexGrow: "1",
-            border: "none",
-            outline: "none",
-          }}
+          className="font-mono p-6 w-full resize-none grow border-0 outline-0"
           value={content}
           autoCorrect="off"
           autoCapitalize="off"
