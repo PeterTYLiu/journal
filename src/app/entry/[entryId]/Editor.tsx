@@ -1,9 +1,7 @@
 "use client";
 
-import { Entry } from "@/generated/prisma/client";
-import { updateEntryText } from "./updateEntryText";
-
 import { deleteEntry } from "@/app/deleteEntry";
+import { Entry } from "@/generated/prisma/client";
 import {
   type ChangeEventHandler,
   useActionState,
@@ -13,6 +11,7 @@ import {
   ViewTransition,
 } from "react";
 import { updateEntryDate, type UpdateEntryDateState } from "./updateEntryDate";
+import { updateEntryText } from "./updateEntryText";
 
 export default function Editor({ entry }: { entry: Entry }) {
   const [content, setContent] = useState(entry.text);
